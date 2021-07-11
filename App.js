@@ -1,3 +1,4 @@
+// Thir party imports
 import { StatusBar } from "expo-status-bar";
 import React, { Component } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -22,9 +23,11 @@ const firebaseConfig = {
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 
+// Screens
 import LandingScreen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import MainScreen from "./components/Main";
+import AddScreen from "./components/main/Add";
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
@@ -89,7 +92,19 @@ export default class App extends Component {
 
         return (
             <Provider store={store}>
-                <MainScreen />
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Main">
+                        <Stack.Screen
+                            name="Main"
+                            component={MainScreen}
+                            options={{ headerShown: false }}
+                        ></Stack.Screen>
+                        <Stack.Screen
+                            name="Add"
+                            component={AddScreen}
+                        ></Stack.Screen>
+                    </Stack.Navigator>
+                </NavigationContainer>
             </Provider>
         );
     }
