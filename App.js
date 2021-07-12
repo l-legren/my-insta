@@ -28,6 +28,7 @@ import LandingScreen from "./components/auth/Landing";
 import RegisterScreen from "./components/auth/Register";
 import MainScreen from "./components/Main";
 import AddScreen from "./components/main/Add";
+import SaveScreen from "./components/main/Save";
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
@@ -102,6 +103,11 @@ export default class App extends Component {
                         <Stack.Screen
                             name="Add"
                             component={AddScreen}
+                            navigation={this.props.navigation}
+                        ></Stack.Screen>
+                        <Stack.Screen
+                            name="Save"
+                            component={SaveScreen}
                         ></Stack.Screen>
                     </Stack.Navigator>
                 </NavigationContainer>
