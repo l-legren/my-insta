@@ -10,19 +10,47 @@ export default function SaveScreen(props) {
 
     const uploadImage = async () => {
         const uri = props.route.params.image;
+        const childPath = `post/${
+            firebase.auth().currentUser.uid
+        }/${Math.random().toString(36)}`;
 
         const respond = await fetch(uri);
         const blob = await respond.blob();
 
-        const task = firebase
-            .storage()
-            .ref()
-            .child(
-                `post/${
-                    firebase.auth().currentUser.uid
-                }/${Math.random().toString(36)}`
-            )
-            .put(blob);
+        const task = firebase.storage().ref().child(childPath).put(blob);
+
+        const taskProgress = (snapshot) => {
+            console.log(`transferred: ${snapshot.bytesTransferred}`);
+        };
+
+        const taskError = (error) => {
+            console.log(error);
+        };
+
+        const taskCompleted = () => {
+            task.snapshot.ref.getDownloadURL().then((snapshot) => {
+                savePostData(snapshot);
+                console.log("Completed", snapshot);
+            });
+        };
+
+        task.on("state_changed", taskProgress, taskError, taskCompleted);
+    };
+
+    const savePostData = (downloadURL) => {
+        firebase
+            .firestore()
+            .collection("posts")
+            .doc(firebase.auth().currentUser.uid)
+            .collection("userPosts")
+            .add({
+                downloadURL,
+                caption,
+                creation: firebase.firestore.FieldValue.serverTimestamp()
+            })
+            .then(function () {
+                props.navigation.popToTop();
+            });
     };
 
     return (
