@@ -58,7 +58,7 @@ export default function SaveScreen(props) {
             <Image source={{ uri: props.route.params.image }} />
             <TextInput
                 placeholder="Write a Caption..."
-                onChangetext={(caption) => setCaption(caption)}
+                onChangeText={(caption) => setCaption(caption)}
             />
             <Button title="Save" onPress={() => uploadImage()} />
         </View>

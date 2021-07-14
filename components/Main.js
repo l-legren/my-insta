@@ -4,7 +4,7 @@ import { Text, View } from "react-native";
 // Redux
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { fetchUser } from "../redux/actions";
+import { fetchUser, fetchUserPosts } from "../redux/actions";
 
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
@@ -24,10 +24,13 @@ const EmptyScreen = () => {
 export class MainScreen extends Component {
     componentDidMount() {
         this.props.fetchUser();
+        this.props.fetchUserPosts();
     }
 
     render() {
         const { currentUser } = this.props;
+
+        console.log("Props of Main", this.props)
 
         if (currentUser === undefined) {
             return <View />;
@@ -88,6 +91,6 @@ const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
 });
 const mapDispatchProps = (dispatch) =>
-    bindActionCreators({ fetchUser }, dispatch);
+    bindActionCreators({ fetchUser, fetchUserPosts }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchProps)(MainScreen);
