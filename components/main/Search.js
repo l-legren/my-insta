@@ -15,29 +15,33 @@ export default function SearchScreen() {
             .where("name", ">=", search)
             .get()
             .then((snapshot) => {
-                let users = snapshot.docs.map((user) => {
-                    let data = user.data();
-                    let id = user.id;
+                console.log("inside fetchUsers", snapshot.docs);
+                let users = snapshot.docs.map((doc) => {
+                    let data = doc.data();
+                    let id = doc.id;
 
                     return { id, ...data };
                 });
-                // console.log(snapshot);
                 setUsers(users);
             });
     };
 
+    // console.log("users in Search", users);
+
     return (
         <View>
-            <TextInput onTextChange={(input) => fetchUsers(input)} />
+            <TextInput
+                placeholder="Search User..."
+                onChangeText={(search) => {
+                    console.log("Changing...")
+                    fetchUsers(search)
+                }}
+            />
             <FlatList
                 data={users}
                 numColumns={1}
                 horizontal={false}
-                renderItem={({ item }) => (
-                    <View>
-                        <Text>{item.name}</Text>
-                    </View>
-                )}
+                renderItem={({ item }) => <Text>{item.name}</Text>}
             />
         </View>
     );

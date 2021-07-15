@@ -14,7 +14,7 @@ function ProfileScreen(props) {
     const { currentUser, posts } = props;
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
-    console.log("Props in Profile", props);
+    // console.log("Props in Profile", props);
 
     const styles = StyleSheet.create({
         container: {

@@ -96,12 +96,12 @@ export class MainScreen extends Component {
                 <Tab.Screen
                     name="Search"
                     component={SearchScreen}
-                    listeners={({ navigation }) => ({
-                        tabPress: (event) => {
-                            event.preventDefault();
-                            navigation.navigate("Search");
-                        },
-                    })}
+                    // listeners={({ navigation }) => ({
+                    //     tabPress: (event) => {
+                    //         event.preventDefault();
+                    //         navigation.navigate("Search");
+                    //     },
+                    // })}
                     options={{
                         tabBarIcon: ({ color, size }) => {
                             return (
