@@ -1,16 +1,40 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Image, FlatList } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    FlatList,
+    useWindowDimensions,
+} from "react-native";
 
 import { connect } from "react-redux";
 
 function ProfileScreen(props) {
     const { currentUser, posts } = props;
-
-    const DATA = posts;
+    const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
     console.log("Props in Profile", props);
 
-    const Item = ({ downloadURL }) => null;
+    const styles = StyleSheet.create({
+        container: {
+            flex: 1,
+            marginTop: 40,
+        },
+        containerInfo: {
+            margin: 20,
+        },
+        containerGallery: {
+            flex: 1,
+        },
+        containerImage: {
+            flex: 1 / 3,
+        },
+        image: {
+            width: imageWidth,
+            height: imageWidth,
+        },
+    });
 
     return (
         <View style={styles.container}>
@@ -19,31 +43,27 @@ function ProfileScreen(props) {
                 <Text>{currentUser.email}</Text>
             </View>
             <View style={styles.containerGallery}>
-                <FlatList numColumns={3} data={DATA} renderItem={() => <Item />} />
-                {/* <Image source={downloadURL} /> */}
+                <FlatList
+                    numColumns={3}
+                    data={posts}
+                    horizontal={false}
+                    renderItem={({ item }) => (
+                        <View style={styles.containerImage}>
+                            <Image
+                                style={styles.image}
+                                source={{ uri: item.downloadURL }}
+                            />
+                        </View>
+                    )}
+                />
             </View>
         </View>
-        // <View>
-        // </View>
     );
 }
 
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     posts: store.userState.posts,
-});
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: "40px",
-    },
-    containerInfo: {
-        margin: "20px"
-    },
-    containerGallery: {
-        flex: 1,
-    }
 });
 
 export default connect(mapStateToProps, null)(ProfileScreen);
