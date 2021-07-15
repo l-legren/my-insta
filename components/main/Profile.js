@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import {
     StyleSheet,
     Text,
@@ -7,19 +7,38 @@ import {
     FlatList,
     useWindowDimensions,
 } from "react-native";
-
+import firebase from "firebase";
 import { connect } from "react-redux";
 
 function ProfileScreen(props) {
-    const { currentUser, posts } = props;
+    const [userPosts, setUserPosts] = useState([])
+    const [user, setUser] = useState(null)
+
+    
+    useEffect(() => {
+        const { currentUser, posts } = props;
+        
+        console.log(props.route.params.uid, firebase.auth().currentUser.uid);
+        
+        if (props.route.params.uid === firebase.auth().currentUser.uid) {
+            setUser(currentUser);
+            setUserPosts(posts)
+        } else {
+            setUser(null);
+        }
+    }, [])
+
+    if (user === null) {
+        return <View />
+    }
+
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
-    // console.log("Props in Profile", props);
+    console.log("Props in Profile", props);
 
     const styles = StyleSheet.create({
         container: {
             flex: 1,
-            marginTop: 40,
         },
         containerInfo: {
             margin: 20,
@@ -39,8 +58,8 @@ function ProfileScreen(props) {
     return (
         <View style={styles.container}>
             <View style={styles.containerInfo}>
-                <Text>{currentUser.name}</Text>
-                <Text>{currentUser.email}</Text>
+                <Text>{user.name}</Text>
+                <Text>{user.email}</Text>
             </View>
             <View style={styles.containerGallery}>
                 <FlatList

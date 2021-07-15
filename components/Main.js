@@ -8,6 +8,8 @@ import { fetchUser, fetchUserPosts } from "../redux/actions";
 
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 
+import firebase from "firebase";
+
 //Icons
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -45,6 +47,7 @@ export class MainScreen extends Component {
                 <Tab.Screen
                     name="Feed"
                     component={FeedScreen}
+                    navigation={this.props.navigation}
                     options={{
                         tabBarIcon: ({ color, size }) => {
                             return (
@@ -81,6 +84,14 @@ export class MainScreen extends Component {
                 <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
+                    listeners={({ navigation }) => ({
+                        tabPress: (event) => {
+                            event.preventDefault();
+                            navigation.navigate("Profile", {
+                                uid: firebase.auth().currentUser.uid,
+                            });
+                        },
+                    })}
                     options={{
                         tabBarIcon: ({ color, size }) => {
                             return (
@@ -96,12 +107,6 @@ export class MainScreen extends Component {
                 <Tab.Screen
                     name="Search"
                     component={SearchScreen}
-                    // listeners={({ navigation }) => ({
-                    //     tabPress: (event) => {
-                    //         event.preventDefault();
-                    //         navigation.navigate("Search");
-                    //     },
-                    // })}
                     options={{
                         tabBarIcon: ({ color, size }) => {
                             return (
