@@ -28,7 +28,17 @@ export default function SearchScreen() {
 
     return (
         <View>
-            <TextInput onTextChange={(input) => fetchUsers(input)}></TextInput>
+            <TextInput onTextChange={(input) => fetchUsers(input)} />
+            <FlatList
+                data={users}
+                numColumns={1}
+                horizontal={false}
+                renderItem={({ item }) => (
+                    <View>
+                        <Text>{item.name}</Text>
+                    </View>
+                )}
+            />
         </View>
     );
 }
