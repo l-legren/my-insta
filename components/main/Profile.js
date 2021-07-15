@@ -8,31 +8,63 @@ import {
     useWindowDimensions,
 } from "react-native";
 import firebase from "firebase";
+import "firebase/firestore";
 import { connect } from "react-redux";
 
 function ProfileScreen(props) {
-    const [userPosts, setUserPosts] = useState([])
-    const [user, setUser] = useState(null)
-
-    
-    useEffect(() => {
-        const { currentUser, posts } = props;
-        
-        console.log(props.route.params.uid, firebase.auth().currentUser.uid);
-        
-        if (props.route.params.uid === firebase.auth().currentUser.uid) {
-            setUser(currentUser);
-            setUserPosts(posts)
-        } else {
-            setUser(null);
-        }
-    }, [])
-
-    if (user === null) {
-        return <View />
-    }
+    const [userPosts, setUserPosts] = useState([]);
+    const [user, setUser] = useState(null);
 
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
+
+    useEffect(() => {
+        const { currentUser, posts } = props;
+
+        console.log(currentUser);
+
+        if (props.route.params.uid === firebase.auth().currentUser.uid) {
+            setUser(currentUser);
+            setUserPosts(posts);
+        } else {
+            firebase
+                .firestore()
+                .collection("users")
+                .doc(props.route.params.uid)
+                .get()
+                .then(snapshot => {
+                    if (snapshot.exists) {
+                        setUser(snapshot.data())
+                    } else {
+                        console.log("Snapshot doesnt exist")
+                    }
+                })
+
+            firebase
+                .firestore()
+                .collection("posts")
+                .doc(props.route.params.uid)
+                .collection("userPosts")
+                .orderBy("creation", "asc")
+                .get()
+                .then((snapshot) => {
+                    let thirdUserPosts = snapshot.docs.map((doc) => {
+                        const data = doc.data();
+                        const id = doc.id;
+
+                        return {
+                            id,
+                            ...data,
+                        };
+                    });
+                    // console.log("This is the snapshot", posts);
+                    setUserPosts(thirdUserPosts);
+                });
+        }
+    }, [props.route.params.uid]);
+
+    if (user === null) {
+        return <View />;
+    }
 
     console.log("Props in Profile", props);
 
@@ -64,7 +96,7 @@ function ProfileScreen(props) {
             <View style={styles.containerGallery}>
                 <FlatList
                     numColumns={3}
-                    data={posts}
+                    data={userPosts}
                     horizontal={false}
                     renderItem={({ item }) => (
                         <View style={styles.containerImage}>
