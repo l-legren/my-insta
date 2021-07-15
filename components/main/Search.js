@@ -1,15 +1,34 @@
-import React, { useState } from 'react'
-import { View, TextInput, FlatList, Text } from 'react-native'
+import React, { useState } from "react";
+import { View, TextInput, FlatList, Text } from "react-native";
 
-import firebase from 'firebase'
+import firebase from "firebase";
 
-require("firebase/firestore")
+require("firebase/firestore");
 
 export default function SearchScreen() {
-    const [users,setUsers] = useState([]) 
+    const [users, setUsers] = useState([]);
+
+    const fetchUsers = (search) => {
+        firebase
+            .firestore()
+            .collection("users")
+            .where("name", ">=", search)
+            .get()
+            .then((snapshot) => {
+                let users = snapshot.docs.map((user) => {
+                    let data = user.data();
+                    let id = user.id;
+
+                    return { id, ...data };
+                });
+                // console.log(snapshot);
+                setUsers(users);
+            });
+    };
+
     return (
         <View>
-            <Text></Text>
+            <TextInput onTextChange={(input) => fetchUsers(input)}></TextInput>
         </View>
-    )
+    );
 }
