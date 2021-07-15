@@ -18,8 +18,8 @@ import ProfileScreen from "./main/Profile";
 const Tab = createMaterialBottomTabNavigator();
 
 const EmptyScreen = () => {
-    return null
-}
+    return null;
+};
 
 export class MainScreen extends Component {
     componentDidMount() {
@@ -27,10 +27,14 @@ export class MainScreen extends Component {
         this.props.fetchUserPosts();
     }
 
+    componentDidUpdate() {
+        this.props.fetchUserPosts();
+    }
+
     render() {
         const { currentUser } = this.props;
 
-        console.log("Props of Main", this.props)
+        console.log("Props of Main", this.props);
 
         if (currentUser === undefined) {
             return <View />;
@@ -42,11 +46,13 @@ export class MainScreen extends Component {
                     component={FeedScreen}
                     options={{
                         tabBarIcon: ({ color, size }) => {
-                            return <MaterialCommunityIcons
-                                name="home"
-                                color={color}
-                                size={26}
-                            />
+                            return (
+                                <MaterialCommunityIcons
+                                    name="home"
+                                    color={color}
+                                    size={26}
+                                />
+                            );
                         },
                     }}
                 />
@@ -54,18 +60,20 @@ export class MainScreen extends Component {
                     name="AddContainer"
                     component={EmptyScreen}
                     listeners={({ navigation }) => ({
-                        tabPress: event => {
-                            event.preventDefault()
-                            navigation.navigate("Add")
-                        }
+                        tabPress: (event) => {
+                            event.preventDefault();
+                            navigation.navigate("Add");
+                        },
                     })}
                     options={{
                         tabBarIcon: ({ color, size }) => {
-                            return <MaterialCommunityIcons
-                                name="plus-box"
-                                color={color}
-                                size={26}
-                            />
+                            return (
+                                <MaterialCommunityIcons
+                                    name="plus-box"
+                                    color={color}
+                                    size={26}
+                                />
+                            );
                         },
                     }}
                 />
@@ -74,11 +82,13 @@ export class MainScreen extends Component {
                     component={ProfileScreen}
                     options={{
                         tabBarIcon: ({ color, size }) => {
-                            return <MaterialCommunityIcons
-                                name="account-circle"
-                                color={color}
-                                size={26}
-                            />
+                            return (
+                                <MaterialCommunityIcons
+                                    name="account-circle"
+                                    color={color}
+                                    size={26}
+                                />
+                            );
                         },
                     }}
                 />
