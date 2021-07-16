@@ -9,7 +9,7 @@ import {
     Button,
 } from "react-native";
 import firebase from "firebase";
-import "firebase/firestore";
+require("firebase/firestore");
 import { connect } from "react-redux";
 
 function ProfileScreen(props) {
@@ -21,8 +21,6 @@ function ProfileScreen(props) {
 
     useEffect(() => {
         const { currentUser, posts } = props;
-
-        console.log(currentUser);
 
         if (props.route.params.uid === firebase.auth().currentUser.uid) {
             setUser(currentUser);
@@ -62,14 +60,15 @@ function ProfileScreen(props) {
                     setUserPosts(thirdUserPosts);
                 });
         }
+
     }, [props.route.params.uid]);
 
     const onFollow = () => {
         firebase
             .firestore()
-            .collections("following")
+            .collection("following")
             .doc(firebase.auth().currentUser.uid)
-            .collections("userFollowing")
+            .collection("userFollowing")
             .doc(props.route.params.uid)
             .set({});
     };
@@ -81,7 +80,7 @@ function ProfileScreen(props) {
             .doc(firebase.auth().currentUser.uid)
             .collections("userFollowing")
             .doc(props.route.params.uid)
-            .set({});
+            .delete();
     };
 
     if (user === null) {
