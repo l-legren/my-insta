@@ -20,7 +20,7 @@ function ProfileScreen(props) {
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
     useEffect(() => {
-        const { currentUser, posts, following } = props;
+        const { currentUser, posts } = props;
 
         console.log("Props in profile", props)
 
@@ -63,13 +63,13 @@ function ProfileScreen(props) {
                 });
         }
 
-        if (following.includes(props.route.params.uid)) {
+        if (props.following.includes(props.route.params.uid)) {
             setFollowing(true)
         } else {
             setFollowing(false);
         }
 
-    }, [props.route.params.uid, following]);
+    }, [props.route.params.uid, props.following]);
 
     const onFollow = () => {
         firebase
@@ -84,9 +84,9 @@ function ProfileScreen(props) {
     const onUnfollow = () => {
         firebase
             .firestore()
-            .collections("following")
+            .collection("following")
             .doc(firebase.auth().currentUser.uid)
-            .collections("userFollowing")
+            .collection("userFollowing")
             .doc(props.route.params.uid)
             .delete();
     };

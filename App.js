@@ -29,7 +29,6 @@ import RegisterScreen from "./components/auth/Register";
 import MainScreen from "./components/Main";
 import AddScreen from "./components/main/Add";
 import SaveScreen from "./components/main/Save";
-import SearchScreen from "./components/main/Search";
 
 if (firebase.apps.length === 0) {
     firebase.initializeApp(firebaseConfig);
