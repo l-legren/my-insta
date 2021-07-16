@@ -6,6 +6,7 @@ import {
     Image,
     FlatList,
     useWindowDimensions,
+    Button,
 } from "react-native";
 import firebase from "firebase";
 import "firebase/firestore";
@@ -14,6 +15,7 @@ import { connect } from "react-redux";
 function ProfileScreen(props) {
     const [userPosts, setUserPosts] = useState([]);
     const [user, setUser] = useState(null);
+    const [following, setFollowing] = useState(false);
 
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
@@ -31,13 +33,13 @@ function ProfileScreen(props) {
                 .collection("users")
                 .doc(props.route.params.uid)
                 .get()
-                .then(snapshot => {
+                .then((snapshot) => {
                     if (snapshot.exists) {
-                        setUser(snapshot.data())
+                        setUser(snapshot.data());
                     } else {
-                        console.log("Snapshot doesnt exist")
+                        console.log("Snapshot doesnt exist");
                     }
-                })
+                });
 
             firebase
                 .firestore()
@@ -61,6 +63,26 @@ function ProfileScreen(props) {
                 });
         }
     }, [props.route.params.uid]);
+
+    const onFollow = () => {
+        firebase
+            .firestore()
+            .collections("following")
+            .doc(firebase.auth().currentUser.uid)
+            .collections("userFollowing")
+            .doc(props.route.params.uid)
+            .set({});
+    };
+
+    const onUnfollow = () => {
+        firebase
+            .firestore()
+            .collections("following")
+            .doc(firebase.auth().currentUser.uid)
+            .collections("userFollowing")
+            .doc(props.route.params.uid)
+            .set({});
+    };
 
     if (user === null) {
         return <View />;
@@ -92,6 +114,23 @@ function ProfileScreen(props) {
             <View style={styles.containerInfo}>
                 <Text>{user.name}</Text>
                 <Text>{user.email}</Text>
+                {props.route.params.uid !== firebase.auth().currentUser.uid ? (
+                    <View>
+                        {following ? (
+                            <Button
+                                type="button"
+                                title="Following"
+                                onPress={() => onUnfollow()}
+                            />
+                        ) : (
+                            <Button
+                                type="button"
+                                title="Follow"
+                                onPress={() => onFollow()}
+                            />
+                        )}
+                    </View>
+                ) : null}
             </View>
             <View style={styles.containerGallery}>
                 <FlatList
