@@ -20,7 +20,7 @@ function ProfileScreen(props) {
     const imageWidth = Math.floor(useWindowDimensions().width / 3);
 
     useEffect(() => {
-        const { currentUser, posts } = props;
+        const { currentUser, posts, following } = props;
 
         if (props.route.params.uid === firebase.auth().currentUser.uid) {
             setUser(currentUser);
@@ -61,7 +61,13 @@ function ProfileScreen(props) {
                 });
         }
 
-    }, [props.route.params.uid]);
+        if (following.indexOf(props.route.params.uid) > -1) {
+            setFollowing(true)
+        } else {
+            setFollowing(false);
+        }
+
+    }, [props.route.params.uid, following]);
 
     const onFollow = () => {
         firebase
@@ -153,6 +159,7 @@ function ProfileScreen(props) {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     posts: store.userState.posts,
+    following: store.userState.following
 });
 
 export default connect(mapStateToProps, null)(ProfileScreen);

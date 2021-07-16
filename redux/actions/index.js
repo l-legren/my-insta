@@ -45,7 +45,7 @@ export function fetchUserPosts() {
                         ...data,
                     };
                 });
-                console.log("This is the snapshot", posts);
+                // console.log("This is the snapshot", posts);
                 dispatch({
                     type: USER_POSTS_STATE_CHANGE,
                     posts,
@@ -67,7 +67,7 @@ export function fetchUserFollowing() {
                     const id = doc.id;
                     return id;
                 });
-                console.log("This is the snapshot", posts);
+                // console.log("This is the snapshot", following);
                 dispatch({
                     type: USER_FOLLOWING_STATE_CHANGE,
                     following,
