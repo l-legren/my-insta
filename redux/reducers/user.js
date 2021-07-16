@@ -6,7 +6,7 @@ const initialState = {
     following: []
 };
 
-export { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE } from "../constants";
+// export { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE } from "../constants";
 
 export const user = (state = initialState, action) => {
     switch (action.type) {

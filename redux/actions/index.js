@@ -74,3 +74,9 @@ export function fetchUserFollowing() {
             });
     };
 }
+
+export function fetchUsersData(uid) {
+    return (dispatch, getState) => {
+        
+    }
+}
