@@ -22,6 +22,8 @@ function ProfileScreen(props) {
     useEffect(() => {
         const { currentUser, posts, following } = props;
 
+        console.log("Props in profile", props)
+
         if (props.route.params.uid === firebase.auth().currentUser.uid) {
             setUser(currentUser);
             setUserPosts(posts);
@@ -61,7 +63,7 @@ function ProfileScreen(props) {
                 });
         }
 
-        if (following.indexOf(props.route.params.uid) > -1) {
+        if (following.includes(props.route.params.uid)) {
             setFollowing(true)
         } else {
             setFollowing(false);

@@ -61,13 +61,12 @@ export function fetchUserFollowing() {
             .collection("following")
             .doc(firebase.auth().currentUser.uid)
             .collection("userFollowing")
-            .orderBy("creation", "asc")
             .onSnapshot((snapshot) => {
                 let following = snapshot.docs.map((doc) => {
                     const id = doc.id;
                     return id;
                 });
-                // console.log("This is the snapshot", following);
+                console.log("This is the snapshot following", following);
                 dispatch({
                     type: USER_FOLLOWING_STATE_CHANGE,
                     following,
