@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import RootReducer from "./redux/reducers";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
 
 import { API_KEY_FIREBASE, MEASUREMENT_ID, APP_ID, SENDER_ID } from "@env";
 
@@ -36,7 +37,10 @@ if (firebase.apps.length === 0) {
 
 const Stack = createStackNavigator();
 
-const store = createStore(RootReducer, applyMiddleware(thunk));
+const store = createStore(
+    RootReducer,
+    composeWithDevTools(applyMiddleware(thunk))
+);
 
 export default class App extends Component {
     constructor(props) {

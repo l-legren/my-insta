@@ -68,7 +68,7 @@ export function fetchUserFollowing() {
                     const id = doc.id;
                     return id;
                 });
-                console.log("This is the snapshot following", following);
+                // console.log("This is the snapshot following", following);
                 dispatch({
                     type: USER_FOLLOWING_STATE_CHANGE,
                     following,
@@ -118,10 +118,10 @@ export function fetchUsersFollowingPosts(uid) {
             .get()
             .then((snapshot) => {
                 const uid = snapshot.docs[0].ref.path.split("/")[1];
-                console.log(
-                    "This is the snapshot with id from fetchUsersFollowingPosts",
-                    { query: snapshot.docs[0].ref.path.split("/")[1] }
-                );
+                // console.log(
+                //     "This is the snapshot with id from fetchUsersFollowingPosts",
+                //     { query: snapshot.docs[0].ref.path.split("/")[1] }
+                // );
                 const user = getState().usersState.users.find(
                     (el) => el.uid === uid
                 );
@@ -141,7 +141,7 @@ export function fetchUsersFollowingPosts(uid) {
                     posts,
                     uid,
                 });
-                // console.log("Posts from users",posts)
+                console.log("Posts from users", posts)
             });
     };
 }

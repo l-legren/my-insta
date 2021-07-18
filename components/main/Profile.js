@@ -22,7 +22,7 @@ function ProfileScreen(props) {
     useEffect(() => {
         const { currentUser, posts } = props;
 
-        console.log("Props in profile", props)
+        // console.log("Props in profile", props)
 
         if (props.route.params.uid === firebase.auth().currentUser.uid) {
             setUser(currentUser);

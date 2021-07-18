@@ -23,7 +23,7 @@ export const users = (state = initialState, action) => {
                 ...state,
                 usersLoaded: state.usersLoaded + 1,
                 users: state.users.map((user) =>
-                    user.id === action.uid
+                    user.uid == action.uid
                         ? { ...user, posts: action.posts }
                         : user
                 ),

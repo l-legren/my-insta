@@ -23,23 +23,23 @@ function FeedScreen(props) {
         if (props.usersLoaded === props.following.length) {
             for (let i = 0; i < props.following.length; i++) {
                 const user = props.users.find(
-                    (user) => user.uid === props.following[i].uid
+                    (user) => user.uid === props.following[i]
                 );
-                if (user) {
-                    posts = [...posts, ...user.posts];
+                if (user !== undefined) {
+                    console.log("USER?", user)
+                    // posts = [...posts, ...user.posts];
                 }
             }
         }
 
-        posts.sort((x, y) => {
-            return x.creation - y.creation;
-        });
-
-        setPosts(posts)
-
+        // posts.sort((x, y) => {
+        //     return x.creation - y.creation;
+        // });
+        // console.log("Posts of friends", posts)
+        // setPosts(posts);
     }, [props.usersLoaded]);
 
-    console.log("Props in Profile", props);
+    console.log("Props in FEED", props);
 
     const styles = StyleSheet.create({
         container: {
@@ -64,11 +64,14 @@ function FeedScreen(props) {
         <View style={styles.container}>
             <View style={styles.containerGallery}>
                 <FlatList
-                    numColumns={3}
-                    data={userPosts}
+                    numColumns={1}
+                    data={posts}
                     horizontal={false}
                     renderItem={({ item }) => (
                         <View style={styles.containerImage}>
+                            <Text style={styles.container}>
+                                {item.user.name}
+                            </Text>
                             <Image
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
