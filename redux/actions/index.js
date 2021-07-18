@@ -4,6 +4,7 @@ import {
     USER_POSTS_STATE_CHANGE,
     USER_FOLLOWING_STATE_CHANGE,
     USERS_DATA_STATE_CHANGE,
+    USERS_POSTS_STATE_CHANGE
 } from "../constants";
 
 export function fetchUser() {
@@ -63,7 +64,7 @@ export function fetchUserFollowing() {
             .doc(firebase.auth().currentUser.uid)
             .collection("userFollowing")
             .onSnapshot((snapshot) => {
-                let following = snapshot.docs.map((doc) => {
+                const following = snapshot.docs.map((doc) => {
                     const id = doc.id;
                     return id;
                 });
@@ -93,12 +94,12 @@ export function fetchUsersData(uid) {
                     if (snapshot.exists) {
                         let user = snapshot.data();
                         user.uid = snapshot.id;
-                        console.log("User from action", user);
+                        // console.log("User from action", user);
                         dispatch({
                             type: USERS_DATA_STATE_CHANGE,
                             user,
                         });
-                        dispatch(fetchUsersFollowingPosts(user.id));
+                        dispatch(fetchUsersFollowingPosts(user.uid));
                     }
                 });
         }
@@ -107,6 +108,7 @@ export function fetchUsersData(uid) {
 
 export function fetchUsersFollowingPosts(uid) {
     return (dispatch, getState) => {
+        // console.log("UID!!!!", uid)
         firebase
             .firestore()
             .collection("posts")
@@ -115,10 +117,10 @@ export function fetchUsersFollowingPosts(uid) {
             .orderBy("creation", "asc")
             .get()
             .then((snapshot) => {
-                const uid = snapshot.query.EP.path.segments[1];
+                const uid = snapshot.docs[0].ref.path.split("/")[1];
                 console.log(
                     "This is the snapshot with id from fetchUsersFollowingPosts",
-                    { snapshot, uid }
+                    { query: snapshot.docs[0].ref.path.split("/")[1] }
                 );
                 const user = getState().usersState.users.find(
                     (el) => el.uid === uid
@@ -139,6 +141,7 @@ export function fetchUsersFollowingPosts(uid) {
                     posts,
                     uid,
                 });
+                console.log("Posts from users",posts)
             });
     };
 }
