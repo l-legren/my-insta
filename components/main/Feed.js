@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 function FeedScreen(props) {
     const [posts, setPosts] = useState([]);
 
-    const imageWidth = Math.floor(useWindowDimensions().width / 3);
+    const imageWidth = Math.floor(useWindowDimensions().width);
 
     useEffect(() => {
         let posts = [];
@@ -26,17 +26,17 @@ function FeedScreen(props) {
                     (user) => user.uid === props.following[i]
                 );
                 if (user !== undefined) {
-                    console.log("USER?", user)
-                    // posts = [...posts, ...user.posts];
+                    console.log("USER?", user);
+                    posts = [...posts, ...user.posts];
                 }
             }
         }
 
-        // posts.sort((x, y) => {
-        //     return x.creation - y.creation;
-        // });
-        // console.log("Posts of friends", posts)
-        // setPosts(posts);
+        posts.sort((x, y) => {
+            return x.creation - y.creation;
+        });
+        console.log("Posts of friends", posts);
+        setPosts(posts);
     }, [props.usersLoaded]);
 
     console.log("Props in FEED", props);
@@ -52,7 +52,7 @@ function FeedScreen(props) {
             flex: 1,
         },
         containerImage: {
-            flex: 1 / 3,
+            flex: 1,
         },
         image: {
             width: imageWidth,

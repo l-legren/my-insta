@@ -8,8 +8,6 @@ const initialState = {
     usersLoaded: 0,
 };
 
-// export { USERS_STATE_CHANGE, USERS_POSTS_STATE_CHANGE } from "../constants";
-
 export const users = (state = initialState, action) => {
     switch (action.type) {
         case USERS_DATA_STATE_CHANGE:
