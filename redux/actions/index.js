@@ -141,7 +141,7 @@ export function fetchUsersFollowingPosts(uid) {
                     posts,
                     uid,
                 });
-                console.log("Posts from users",posts)
+                // console.log("Posts from users",posts)
             });
     };
 }
