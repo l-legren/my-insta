@@ -4,7 +4,7 @@ import { users } from "./users";
 
 const RootReducer = combineReducers({
     userState: user,
-    userLoaded: users
+    usersState: users
 });
 
 export default RootReducer;
