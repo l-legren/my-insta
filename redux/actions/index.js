@@ -72,6 +72,9 @@ export function fetchUserFollowing() {
                     type: USER_FOLLOWING_STATE_CHANGE,
                     following,
                 });
+                for (let i = 0; i < following.length; i++) {
+                    dispatch(fetchUsersData(following[i]));
+                }
             });
     };
 }
@@ -95,6 +98,7 @@ export function fetchUsersData(uid) {
                             type: USERS_DATA_STATE_CHANGE,
                             user,
                         });
+                        dispatch(fetchUsersFollowingPosts(user.id));
                     }
                 });
         }
