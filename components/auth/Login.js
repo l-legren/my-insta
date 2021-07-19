@@ -19,7 +19,7 @@ export default class LoginScreen extends Component {
         const { email, password } = this.state;
         firebase
             .auth()
-            .createUserWithEmailAndPassword(email, password)
+            .signInWithEmailAndPassword(email, password)
             .then((result) => {
                 console.log(result);
             })
@@ -40,7 +40,7 @@ export default class LoginScreen extends Component {
                     secureTextEntry={true}
                     onChangeText={(password) => this.setState({ password })}
                 />
-                <Button onPress={() => this.onLogin()} title="Login" />
+                <Button onPress={this.onLogin} title="Login" />
             </View>
         );
     }
