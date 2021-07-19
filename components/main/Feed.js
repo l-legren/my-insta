@@ -11,6 +11,7 @@ import {
 import firebase from "firebase";
 require("firebase/firestore");
 import { connect } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
 
 function FeedScreen(props) {
     const [posts, setPosts] = useState([]);
@@ -76,6 +77,15 @@ function FeedScreen(props) {
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
                             />
+                            <Text
+                                onPress={() =>
+                                    props.navigation.navigate("Comments", {
+                                        postId: item.id,
+                                    })
+                                }
+                            >
+                                View comments...
+                            </Text>
                         </View>
                     )}
                 />
