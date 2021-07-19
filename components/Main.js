@@ -134,6 +134,7 @@ export class MainScreen extends Component {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
 });
+
 const mapDispatchProps = (dispatch) =>
     bindActionCreators(
         { fetchUser, fetchUserPosts, fetchUserFollowing, clearData },

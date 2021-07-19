@@ -81,6 +81,7 @@ function FeedScreen(props) {
                                 onPress={() =>
                                     props.navigation.navigate("Comments", {
                                         postId: item.id,
+                                        uid: item.user.uid
                                     })
                                 }
                             >

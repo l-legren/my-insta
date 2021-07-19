@@ -154,3 +154,7 @@ export function fetchUsersFollowingPosts(uid) {
             });
     };
 }
+
+export function fetchPostComments(postId) {
+    
+}
