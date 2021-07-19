@@ -64,11 +64,10 @@ function ProfileScreen(props) {
         }
 
         if (props.following.includes(props.route.params.uid)) {
-            setFollowing(true)
+            setFollowing(true);
         } else {
             setFollowing(false);
         }
-
     }, [props.route.params.uid, props.following]);
 
     const onFollow = () => {
@@ -89,6 +88,10 @@ function ProfileScreen(props) {
             .collection("userFollowing")
             .doc(props.route.params.uid)
             .delete();
+    };
+
+    const onLogOut = () => {
+        firebase.auth().signOut();
     };
 
     if (user === null) {
@@ -137,7 +140,13 @@ function ProfileScreen(props) {
                             />
                         )}
                     </View>
-                ) : null}
+                ) : (
+                    <Button
+                        type="button"
+                        title="Log Out"
+                        onPress={() => onLogOut()}
+                    />
+                )}
             </View>
             <View style={styles.containerGallery}>
                 <FlatList
@@ -161,7 +170,7 @@ function ProfileScreen(props) {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     posts: store.userState.posts,
-    following: store.userState.following
+    following: store.userState.following,
 });
 
 export default connect(mapStateToProps, null)(ProfileScreen);

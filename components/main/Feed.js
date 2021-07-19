@@ -26,7 +26,7 @@ function FeedScreen(props) {
                     (user) => user.uid === props.following[i]
                 );
                 if (user !== undefined) {
-                    console.log("USER?", user);
+                    // console.log("USER?", user);
                     posts = [...posts, ...user.posts];
                 }
             }
@@ -35,7 +35,7 @@ function FeedScreen(props) {
         posts.sort((x, y) => {
             return x.creation - y.creation;
         });
-        console.log("Posts of friends", posts);
+        // console.log("Posts of friends", posts);
         setPosts(posts);
     }, [props.usersLoaded]);
 
