@@ -83,7 +83,7 @@ const CommentsScreen = (props) => {
                 data={comments}
                 horizontal={false}
                 numColumns={1}
-                extraData={props}
+                extraData={props.users}
                 renderItem={({ item }) => (
                     <View>
                         {item.user !== undefined ? (
