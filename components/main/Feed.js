@@ -21,7 +21,7 @@ function FeedScreen(props) {
     useEffect(() => {
         let posts = [];
 
-        if (props.usersLoaded === props.following.length) {
+        if (props.usersFollowingLoaded === props.following.length) {
             for (let i = 0; i < props.following.length; i++) {
                 const user = props.users.find(
                     (user) => user.uid === props.following[i]
@@ -38,9 +38,9 @@ function FeedScreen(props) {
         });
         // console.log("Posts of friends", posts);
         setPosts(posts);
-    }, [props.usersLoaded]);
+    }, [props.usersFollowingLoaded]);
 
-    console.log("Props in FEED", props);
+    // console.log("Props in FEED", props);
 
     const styles = StyleSheet.create({
         container: {
@@ -81,7 +81,7 @@ function FeedScreen(props) {
                                 onPress={() =>
                                     props.navigation.navigate("Comments", {
                                         postId: item.id,
-                                        uid: item.user.uid
+                                        uid: item.user.uid,
                                     })
                                 }
                             >
@@ -99,7 +99,7 @@ const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     following: store.userState.following,
     users: store.usersState.users,
-    usersLoaded: store.usersState.usersLoaded,
+    usersFollowingLoaded: store.usersState.usersFollowingLoaded,
 });
 
 export default connect(mapStateToProps, null)(FeedScreen);
