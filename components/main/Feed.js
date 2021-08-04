@@ -19,26 +19,14 @@ function FeedScreen(props) {
     const imageWidth = Math.floor(useWindowDimensions().width);
 
     useEffect(() => {
-        let posts = [];
-
-        if (props.usersFollowingLoaded === props.following.length) {
-            for (let i = 0; i < props.following.length; i++) {
-                const user = props.users.find(
-                    (user) => user.uid === props.following[i]
-                );
-                if (user !== undefined) {
-                    // console.log("USER?", user);
-                    posts = [...posts, ...user.posts];
-                }
-            }
+        if (props.usersFollowingLoaded == props.following.length && props.following !== 0) {
+            props.feed.sort((x, y) => {
+                return x.creation - y.creation;
+            });
+            // console.log("Posts of friends", posts);
+            setPosts(posts);
         }
-
-        posts.sort((x, y) => {
-            return x.creation - y.creation;
-        });
-        // console.log("Posts of friends", posts);
-        setPosts(posts);
-    }, [props.usersFollowingLoaded]);
+    }, [props.usersFollowingLoaded, props.feed]);
 
     // console.log("Props in FEED", props);
 
@@ -98,7 +86,7 @@ function FeedScreen(props) {
 const mapStateToProps = (store) => ({
     currentUser: store.userState.currentUser,
     following: store.userState.following,
-    users: store.usersState.users,
+    feed: store.usersState.feed,
     usersFollowingLoaded: store.usersState.usersFollowingLoaded,
 });
 

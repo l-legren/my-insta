@@ -54,6 +54,9 @@ export default class App extends Component {
     }
 
     componentDidMount() {
+
+        console.log(API_KEY_FIREBASE)
+
         firebase.auth().onAuthStateChanged((user) => {
             if (!user) {
                 this.setState({
