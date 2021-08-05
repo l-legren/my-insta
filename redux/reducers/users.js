@@ -30,9 +30,6 @@ export const users = (state = initialState, action) => {
                 ...state,
                 feed: state.feed.map((post) =>
                 {
-                    // console.log("POST",post)
-                    // console.log("ACTION", action)
-                    // console.log(post.id === action.postId)
                     return post.id == action.postId
                         ? {...post, currentUserLike: action.currentUserLike }
                         : post

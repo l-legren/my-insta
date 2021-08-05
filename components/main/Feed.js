@@ -25,13 +25,10 @@ function FeedScreen(props) {
                 return x.creation - y.creation;
             });
             setPosts(props.feed);
-            // console.log(...props.feed);
         }
     }, [props.usersFollowingLoaded, props.feed]);
 
     const onLikePress = (userId, postId) => {
-        console.log("Liking", userId);
-        console.log("Liking postId", postId);
         firebase
             .firestore()
             .collection("posts")
@@ -44,8 +41,6 @@ function FeedScreen(props) {
     };
 
     const onDislikePress = (userId, postId) => {
-        console.log("Disliking", userId)
-        console.log("Disliking postId", postId)
         firebase
             .firestore()
             .collection("posts")
@@ -83,7 +78,7 @@ function FeedScreen(props) {
                     numColumns={1}
                     data={posts}
                     horizontal={false}
-                    extraData={props.feed}
+                    extraData={props}
                     renderItem={({ item }) => (
                         <View style={styles.containerImage}>
                             <Text style={styles.container}>

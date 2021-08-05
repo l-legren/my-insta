@@ -8,7 +8,7 @@ import {
     USERS_DATA_STATE_CHANGE,
     USERS_POSTS_STATE_CHANGE,
     CLEAR_DATA,
-    USERS_LIKES_STATE_CHANGE
+    USERS_LIKES_STATE_CHANGE,
 } from "../constants";
 
 export function clearData() {
@@ -155,7 +155,7 @@ export function fetchUsersFollowingPosts(uid) {
 
                 for (let i = 0; i < posts.length; i++) {
                     // console.log("Before dispatching likes", posts[i])
-                    dispatch(fetchUsersFollowingLikes(uid, posts[i].id))
+                    dispatch(fetchUsersFollowingLikes(uid, posts[i].id));
                 }
 
                 dispatch({
@@ -168,7 +168,7 @@ export function fetchUsersFollowingPosts(uid) {
     };
 }
 
-export function fetchUsersFollowingLikes(uid,postId) {
+export function fetchUsersFollowingLikes(uid, postId) {
     return (dispatch) => {
         // console.log("PostID!!!!", postId)
         firebase
@@ -180,20 +180,26 @@ export function fetchUsersFollowingLikes(uid,postId) {
             .collection("likes")
             .doc(firebase.auth().currentUser.uid)
             .onSnapshot((snapshot) => {
-                const postId = snapshot.ref.path.split('/')[3]
+                const postId = snapshot.ref.path.split("/")[3];
                 // console.log("SNAPSHOT", postId);
                 let currentUserLike = false;
 
                 if (snapshot.exists) {
-                    currentUserLike = true
-                    // console.log("Current User Like", currentUserLike)
+                    currentUserLike = true;
+                    console.log("Current User Like", currentUserLike);
                     dispatch({
                         type: USERS_LIKES_STATE_CHANGE,
                         postId,
-                        currentUserLike
-                    })
+                        currentUserLike,
+                    });
+                } else {
+                    currentUserLike = false;
+                    dispatch({
+                        type: USERS_LIKES_STATE_CHANGE,
+                        postId,
+                        currentUserLike,
+                    });
                 }
-
             });
     };
 }
