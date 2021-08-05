@@ -8,6 +8,8 @@ This app is a clone of Instagram built in React-Native and Expo. The user can up
 User can follow other users and see their posts on its feed. 
 The user has the possibility of leaving comments on the picture.
 
+Didn't work on the styling yet, being the app here only functional.
+
 ## Why this?
 
 I found building this App very useful as my first React-Native project to get used and comfortable working with mobile development.
