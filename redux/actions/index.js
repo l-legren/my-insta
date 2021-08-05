@@ -186,14 +186,12 @@ export function fetchUsersFollowingLikes(uid, postId) {
 
                 if (snapshot.exists) {
                     currentUserLike = true;
-                    console.log("Current User Like", currentUserLike);
                     dispatch({
                         type: USERS_LIKES_STATE_CHANGE,
                         postId,
                         currentUserLike,
                     });
                 } else {
-                    currentUserLike = false;
                     dispatch({
                         type: USERS_LIKES_STATE_CHANGE,
                         postId,

@@ -44,8 +44,6 @@ export class MainScreen extends Component {
     render() {
         const { currentUser } = this.props;
 
-        // console.log("Props of Main", this.props);
-
         if (currentUser === undefined) {
             return <View />;
         }
