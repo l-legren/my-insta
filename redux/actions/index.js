@@ -169,7 +169,7 @@ export function fetchUsersFollowingPosts(uid) {
 }
 
 export function fetchUsersFollowingLikes(uid,postId) {
-    return (dispatch, getState) => {
+    return (dispatch) => {
         // console.log("PostID!!!!", postId)
         firebase
             .firestore()
@@ -186,6 +186,7 @@ export function fetchUsersFollowingLikes(uid,postId) {
 
                 if (snapshot.exists) {
                     currentUserLike = true
+                    // console.log("Current User Like", currentUserLike)
                     dispatch({
                         type: USERS_LIKES_STATE_CHANGE,
                         postId,

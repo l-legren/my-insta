@@ -24,7 +24,8 @@ function FeedScreen(props) {
             props.feed.sort((x, y) => {
                 return x.creation - y.creation;
             });
-            setPosts(...props.feed);
+            setPosts(props.feed);
+            // console.log(...props.feed);
         }
     }, [props.usersFollowingLoaded, props.feed]);
 
@@ -43,8 +44,8 @@ function FeedScreen(props) {
     };
 
     const onDislikePress = (userId, postId) => {
-        console.log("Liking", userId)
-        console.log("Liking postId", postId)
+        console.log("Disliking", userId)
+        console.log("Disliking postId", postId)
         firebase
             .firestore()
             .collection("posts")
@@ -82,6 +83,7 @@ function FeedScreen(props) {
                     numColumns={1}
                     data={posts}
                     horizontal={false}
+                    extraData={props.feed}
                     renderItem={({ item }) => (
                         <View style={styles.containerImage}>
                             <Text style={styles.container}>
