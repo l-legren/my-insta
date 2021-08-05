@@ -8,6 +8,7 @@ import {
     USERS_DATA_STATE_CHANGE,
     USERS_POSTS_STATE_CHANGE,
     CLEAR_DATA,
+    USERS_LIKES_STATE_CHANGE
 } from "../constants";
 
 export function clearData() {
@@ -178,28 +179,19 @@ export function fetchUsersFollowingLikes(uid,postId) {
             .collection("likes")
             .doc(firebase.auth().currentUser.uid)
             .onSnapshot((snapshot) => {
-                // const id = snapshot.ZE;
-                console.log("SNAPSHOT", snapshot.ref.path.split('/')[3])
-                // const user = getState().usersState.users.find(
-                //     (el) => el.uid === uid
-                // );
+                const postId = snapshot.ref.path.split('/')[3]
+                // console.log("SNAPSHOT", postId);
+                let currentUserLike = false;
 
-                // let posts = snapshot.docs.map((doc) => {
-                //     const data = doc.data();
-                //     const id = doc.id;
-
-                //     return {
-                //         id,
-                //         user,
-                //         ...data,
-                //     };
-                // });
-                // dispatch({
-                //     type: USERS_POSTS_STATE_CHANGE,
-                //     posts,
-                //     uid,
-                // });
-                // console.log("Posts from users", posts);
+                if (snapshot.exists) {
+                    currentUserLike = true
+                    dispatch({
+                        type: USERS_LIKES_STATE_CHANGE,
+                        postId,
+                        currentUserLike
+                    })
+                }
+                
             });
     };
 }

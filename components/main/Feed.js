@@ -6,7 +6,10 @@ import {
     Image,
     FlatList,
     useWindowDimensions,
+    Button,
 } from "react-native";
+import firebase from "firebase";
+require("firebase/firestore");
 import { connect } from "react-redux";
 
 function FeedScreen(props) {
@@ -21,13 +24,34 @@ function FeedScreen(props) {
             props.feed.sort((x, y) => {
                 return x.creation - y.creation;
             });
-            console.log("Props Feed", props.feed);
             setPosts(...props.feed);
-            console.log("Posts of friends", posts);
+            console.log(...props.feed)
         }
     }, [props.usersFollowingLoaded, props.feed]);
 
-    // console.log("Props in FEED", props);
+    const onLikePress = (userId, postId) => {
+        firebase
+            .firestore()
+            .collection("posts")
+            .doc(userId)
+            .collection("userPosts")
+            .doc(postId)
+            .collection("likes")
+            .doc(firebase.auth().currentUser.uid)
+            .set({});
+    };
+
+    const onDislikePress = (userId, postId) => {
+        firebase
+            .firestore()
+            .collection("posts")
+            .doc(userId)
+            .collection("userPosts")
+            .doc(postId)
+            .collection("likes")
+            .doc(firebase.auth().currentUser.uid)
+            .delete();
+    };
 
     const styles = StyleSheet.create({
         container: {
@@ -64,6 +88,23 @@ function FeedScreen(props) {
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
                             />
+                            {item.currentUserLike ? (
+                                <Button
+                                    title="Dislike"
+                                    onPress={onDislikePress(
+                                        item.user.uid,
+                                        item.id
+                                    )}
+                                />
+                            ) : (
+                                <Button
+                                    title="Dislike"
+                                    onPress={onLikePress(
+                                        item.user.uid,
+                                        item.id
+                                    )}
+                                />
+                            )}
                             <Text
                                 onPress={() =>
                                     props.navigation.navigate("Comments", {
