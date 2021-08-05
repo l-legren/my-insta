@@ -64,6 +64,10 @@ function FeedScreen(props) {
         },
         containerImage: {
             flex: 1,
+            backgroundColor: "blue"
+        },
+        likeButton: {
+            backgroundColor: "green"
         },
         image: {
             width: imageWidth,
@@ -90,19 +94,19 @@ function FeedScreen(props) {
                             />
                             {item.currentUserLike ? (
                                 <Button
+                                    style={styles.likeButton}
                                     title="Dislike"
-                                    onPress={() => onDislikePress(
-                                        item.user.uid,
-                                        item.id
-                                    )}
+                                    onPress={() =>
+                                        onDislikePress(item.user.uid, item.id)
+                                    }
                                 />
                             ) : (
                                 <Button
+                                    style={styles.likeButton}
                                     title="Like"
-                                    onPress={() => onLikePress(
-                                        item.user.uid,
-                                        item.id
-                                    )}
+                                    onPress={() =>
+                                        onLikePress(item.user.uid, item.id)
+                                    }
                                 />
                             )}
                             <Text
