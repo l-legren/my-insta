@@ -154,6 +154,7 @@ export function fetchUsersFollowingPosts(uid) {
                 });
 
                 for (let i = 0; i < posts.length; i++) {
+                    // console.log("Before dispatching likes", posts[i])
                     dispatch(fetchUsersFollowingLikes(uid, posts[i].id))
                 }
 
@@ -162,14 +163,14 @@ export function fetchUsersFollowingPosts(uid) {
                     posts,
                     uid,
                 });
-                console.log("Posts from users", posts);
+                // console.log("Posts from users", posts);
             });
     };
 }
 
 export function fetchUsersFollowingLikes(uid,postId) {
     return (dispatch, getState) => {
-        console.log("PostID!!!!", postId)
+        // console.log("PostID!!!!", postId)
         firebase
             .firestore()
             .collection("posts")
@@ -191,9 +192,7 @@ export function fetchUsersFollowingLikes(uid,postId) {
                         currentUserLike
                     })
                 }
-                
+
             });
     };
 }
-
-export function fetchPostComments(postId) {}
