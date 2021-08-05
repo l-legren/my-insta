@@ -6,25 +6,24 @@ import {
     Image,
     FlatList,
     useWindowDimensions,
-    Button,
 } from "react-native";
-import firebase from "firebase";
-require("firebase/firestore");
 import { connect } from "react-redux";
-import { NavigationContainer } from "@react-navigation/native";
 
 function FeedScreen(props) {
     const [posts, setPosts] = useState([]);
-
     const imageWidth = Math.floor(useWindowDimensions().width);
 
     useEffect(() => {
-        if (props.usersFollowingLoaded == props.following.length && props.following !== 0) {
+        if (
+            props.usersFollowingLoaded == props.following.length &&
+            props.following.length != 0
+        ) {
             props.feed.sort((x, y) => {
                 return x.creation - y.creation;
             });
-            // console.log("Posts of friends", posts);
-            setPosts(posts);
+            console.log("Props Feed", props.feed);
+            setPosts(...props.feed);
+            console.log("Posts of friends", posts);
         }
     }, [props.usersFollowingLoaded, props.feed]);
 

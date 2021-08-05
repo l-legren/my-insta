@@ -58,7 +58,7 @@ function ProfileScreen(props) {
                             ...data,
                         };
                     });
-                    // console.log("This is the snapshot", posts);
+                    console.log("third user posts", thirdUserPosts);
                     setUserPosts(thirdUserPosts);
                 });
         }
@@ -153,14 +153,16 @@ function ProfileScreen(props) {
                     numColumns={3}
                     data={userPosts}
                     horizontal={false}
-                    renderItem={({ item }) => (
+                    renderItem={({ item }) => {
+                        console.log("ITEM PROFILE", item)
+                        return (
                         <View style={styles.containerImage}>
                             <Image
                                 style={styles.image}
                                 source={{ uri: item.downloadURL }}
                             />
                         </View>
-                    )}
+                    )}}
                 />
             </View>
         </View>

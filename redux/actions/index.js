@@ -179,7 +179,7 @@ export function fetchUsersFollowingLikes(uid,postId) {
             .doc(firebase.auth().currentUser.uid)
             .onSnapshot((snapshot) => {
                 // const id = snapshot.ZE;
-                console.log("SNAPSHOT",snapshot.ref.path.split('/')[3])
+                console.log("SNAPSHOT", snapshot.ref.path.split('/')[3])
                 // const user = getState().usersState.users.find(
                 //     (el) => el.uid === uid
                 // );
